@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Star Map</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Favicon reference -->
+</head>
+<body>
+<div id="video-background">
+  <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID?autoplay=1&mute=1&loop=1&playlist=YOUR_VIDEO_ID" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+</div>
+<nav>
+  <div class="nav-container">
+    <a href="index.html" class="app-title">Stargaze.app</a>
+    <div class="nav-links">
+      <a href="map.html">Map</a>
+      <a href="submit.html">Submit Location</a>
+      <a href="list.html">List</a>
+      <a href="starmap.html">Star Map</a>
+    </div>
+  </div>
+</nav>
+<div id="starmap-container">
+  <div id="star-map"></div>
+  <div class="coming-soon">
+    <h1>Coming Soon!</h1>
+  </div>
+  <a href="index.html" id="home-button">Home</a>
+</div>
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="src/bgvid.js"></script>
+<script>
+  // Initialize the star map or any additional scripts needed here
+
+  // Function to handle the fade out and fade in of elements
+  document.addEventListener('DOMContentLoaded', function() {
+    const comingSoon = document.querySelector('.coming-soon');
+    const homeButton = document.getElementById('home-button');
+
+    setTimeout(() => {
+      comingSoon.style.transition = 'opacity 1s';
+      comingSoon.style.opacity = 0;
+      setTimeout(() => {
+        comingSoon.style.display = 'none';
+        homeButton.style.display = 'block';
+        setTimeout(() => {
+          homeButton.style.transition = 'opacity 1s';
+          homeButton.style.opacity = 1;
+        }, 50); // Small delay to ensure display change is registered
+      }, 1000); // Wait for 1 second for the fade-out animation to complete
+    }, 5000); // "Coming Soon!" text is visible for 5 seconds
+  });
+</script>
+</body>
+</html>

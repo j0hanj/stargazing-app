@@ -1,0 +1,11 @@
+{
+  "name": "stargazing",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "http-server": "^14.0.0"
+  }
+}

@@ -1,0 +1,307 @@
+/* General reset */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  color: #fff;
+  overflow-x: hidden; /* Prevent horizontal scrollbars */
+  height: 100%; /* Ensure full height */
+}
+
+/* Video background using iframe */
+#video-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+#video-background iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Navigation */
+nav {
+  position: relative;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+}
+
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 15px;
+}
+
+.nav-links a:hover {
+  text-decoration: underline;
+}
+
+/* Welcome text */
+.welcome-text {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 1;
+  opacity: 0;
+  animation: slideDownFadeInOut 10s ease-in-out forwards;
+}
+
+.welcome-text h1 {
+  margin: 0;
+  font-size: 3em;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* Slide down, fade-in and fade-out animation */
+@keyframes slideDownFadeInOut {
+  0% { top: -50px; opacity: 0; }
+  30% { top: 50%; opacity: 1; }
+  70% { top: 50%; opacity: 1; }
+  100% { top: 50%; opacity: 0; }
+}
+
+/* Map button */
+#map-button {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #6a0dad;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  text-align: center;
+  text-decoration: none;
+  animation: showMapButton 1s ease-in-out forwards;
+}
+
+#map-button:hover {
+  background-color: #551a8b;
+}
+
+/* Animation for map button */
+@keyframes showMapButton {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Map container */
+#map {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+/* Form styles in submit.html */
+form {
+  position: absolute; /* Change to absolute for vertical centering */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjust centering */
+  background: rgba(0, 0, 0, 0.7);
+  padding: 40px;
+  max-width: 700px;
+  width: 100%; /* Ensure it fits within the container */
+  border-radius: 10px;
+  text-align: center; /* Center align the text */
+}
+
+/* Form title */
+form h1 {
+  text-align: center; /* Center align the title */
+  margin-bottom: 20px; /* Adjust spacing */
+}
+
+form label,
+form input[type="text"],
+form textarea,
+form button {
+  display: block; /* Ensure each element is displayed on a new line */
+  margin: 0 auto; /* Center-align form elements */
+}
+
+form input[type="text"],
+form textarea {
+  width: calc(100% - 20px); /* Adjust for padding */
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: #fff;
+  color: #000;
+  font-family: Arial, sans-serif;
+  font-size: 1em;
+}
+
+form button {
+  background: #6a0dad;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+form button:hover {
+  background: #551a8b;
+}
+
+/* Location List Page */
+.location-list {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  overflow-y: auto;
+  height: calc(100vh - 60px);
+}
+
+.location-list h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+/* Card styling */
+.location-card {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  border: 1px solid #fff;
+}
+
+.location-card h2 {
+  margin-top: 0;
+  font-size: 1.5em;
+}
+
+.location-card p {
+  margin: 10px 0;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.card-actions button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.2em;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+/* Hide scrollbars inside content */
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #000;
+}
+
+/* Additional styles for the star map */
+#starmap-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+#star-map {
+  width: 100%;
+  height: 100%;
+}
+
+/* Coming Soon message */
+.coming-soon {
+  position: absolute;
+  text-align: center;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0; /* Start hidden */
+  animation: fadeInOut 5s ease-in-out forwards; /* Fade in and out */
+}
+
+.coming-soon h1 {
+  margin: 0;
+  font-size: 3em;
+  color: #fff;
+  font-weight: bold;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Optional: Adds a shadow for better readability */
+}
+
+/* Fade-in and fade-out animation */
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Home button */
+#home-button {
+  display: none; /* Start hidden */
+  position: absolute;
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%);
+  background-color: #6a0dad;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  text-align: center;
+  text-decoration: none;
+  opacity: 0; /* Start hidden */
+}
+
+#home-button:hover {
+  background-color: #551a8b;
+}
+
+/* Animation for home button */
+@keyframes showHomeButton {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}

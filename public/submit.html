@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Submit Stargazing Location</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Favicon reference -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuDvrJvaDC55tehJemgKyW_7SNSgMovow&libraries=places"></script>
+</head>
+<body>
+<div id="video-background"></div>
+<div id="video-overlay"></div>
+<nav>
+  <div class="nav-container">
+    <a href="index.html" class="app-title">Stargaze.app</a>
+    <div class="nav-links">
+      <a href="map.html">Map</a>
+      <a href="submit.html">Submit Location</a>
+      <a href="list.html">List</a>
+      <a href="starmap.html">Star Map</a>
+    </div>
+  </div>
+</nav>
+<div class="form-wrapper">
+  <h1>Submit Stargazing Location</h1>
+  <form id="location-form">
+    <label for="locationName">Location Name:</label>
+    <input type="text" id="locationName" name="locationName" required>
+    <label for="locationAddress">Location Address:</label>
+    <input type="text" id="locationAddress" name="locationAddress" required>
+    <label for="locationDescription">Location Description:</label>
+    <textarea id="locationDescription" name="locationDescription" required></textarea>
+    <button type="submit">Submit</button>
+  </form>
+</div>
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="src/bgvid.js"></script>
+<script>
+  // Initialize Google Places Autocomplete
+  function initAutocomplete() {
+    const input = document.getElementById('locationAddress');
+    const autocomplete = new google.maps.places.Autocomplete(input);
+    autocomplete.setFields(['address_components', 'geometry', 'name']);
+  }
+
+  // Load autocomplete when the window loads
+  window.onload = initAutocomplete;
+
+  // Handle form submission
+  document.getElementById('location-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // Gather form data
+    const locationName = document.getElementById('locationName').value;
+    const locationAddress = document.getElementById('locationAddress').value;
+    const locationDescription = document.getElementById('locationDescription').value;
+
+    // Create location object
+    const locationData = {
+      name: locationName,
+      address: locationAddress,
+      description: locationDescription
+    };
+
+    // Save location data to local storage
+    const locations = JSON.parse(localStorage.getItem('locations')) || [];
+    locations.push(locationData);
+    localStorage.setItem('locations', JSON.stringify(locations));
+
+    // Geocode the address to get coordinates
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ 'address': locationAddress }, function(results, status) {
+      if (status === 'OK') {
+        const coordinates = {
+          lat: results[0].geometry.location.lat(),
+          lng: results[0].geometry.location.lng()
+        };
+        localStorage.setItem('lastLocation', JSON.stringify(coordinates));
+        // Redirect to map page
+        window.location.href = 'map.html';
+      } else {
+        console.error('Geocode was not successful for the following reason: ' + status);
+      }
+    });
+  });
+</script>
+</body>
+</html>

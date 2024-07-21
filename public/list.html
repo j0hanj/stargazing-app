@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>List of Stargazing Locations</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Favicon reference -->
+</head>
+<body>
+<div id="video-background"></div>
+<div id="video-overlay"></div>
+<nav>
+  <div class="nav-container">
+    <a href="index.html" class="app-title">Stargaze.app</a>
+    <div class="nav-links">
+      <a href="map.html">Map</a>
+      <a href="submit.html">Submit Location</a>
+      <a href="list.html">List</a>
+      <a href="starmap.html">Star Map</a>
+    </div>
+  </div>
+</nav>
+<div class="location-list">
+  <h1>Stargazing Locations</h1>
+  <div id="location-cards"></div>
+</div>
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="src/bgvid.js"></script>
+<script>
+  // Function to create a location card with edit and delete buttons
+  function createLocationCard(location, index) {
+    const card = document.createElement('div');
+    card.className = 'location-card';
+
+    const name = document.createElement('h2');
+    name.textContent = location.name;
+
+    const address = document.createElement('p');
+    address.textContent = location.address;
+
+    const description = document.createElement('p');
+    description.textContent = location.description;
+
+    const actions = document.createElement('div');
+    actions.className = 'card-actions';
+
+    const editButton = document.createElement('button');
+    editButton.className = 'edit-button';
+    editButton.textContent = '✏️';
+    editButton.onclick = () => editLocation(index);
+
+    const deleteButton = document.createElement('button');
+    deleteButton.className = 'delete-button';
+    deleteButton.textContent = '🗑️';
+    deleteButton.onclick = () => deleteLocation(index);
+
+    actions.appendChild(editButton);
+    actions.appendChild(deleteButton);
+
+    card.appendChild(name);
+    card.appendChild(address);
+    card.appendChild(description);
+    card.appendChild(actions);
+
+    return card;
+  }
+
+  // Function to handle deletion of a location
+  function deleteLocation(index) {
+    const locations = JSON.parse(localStorage.getItem('locations')) || [];
+    locations.splice(index, 1);
+    localStorage.setItem('locations', JSON.stringify(locations));
+    window.location.reload(); // Reload the page to update the list
+  }
+
+  // Function to handle editing of a location
+  function editLocation(index) {
+    const locations = JSON.parse(localStorage.getItem('locations')) || [];
+    const location = locations[index];
+    
+    // Prompt user for new details
+    const newName = prompt('Edit Location Name:', location.name);
+    const newAddress = prompt('Edit Location Address:', location.address);
+    const newDescription = prompt('Edit Location Description:', location.description);
+
+    if (newName && newAddress && newDescription) {
+      locations[index] = {
+        name: newName,
+        address: newAddress,
+        description: newDescription
+      };
+      localStorage.setItem('locations', JSON.stringify(locations));
+      window.location.reload(); // Reload the page to update the list
+    }
+  }
+
+  // Load locations from local storage and display them
+  window.onload = function() {
+    const locations = JSON.parse(localStorage.getItem('locations')) || [];
+    console.log('Loaded locations from localStorage:', locations); // Debug log
+    const locationCardsContainer = document.getElementById('location-cards');
+    locations.forEach((location, index) => {
+      const card = createLocationCard(location, index);
+      locationCardsContainer.appendChild(card);
+    });
+  }
+</script>
+</body>
+</html>

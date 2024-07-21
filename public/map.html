@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Map View</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Favicon reference -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuDvrJvaDC55tehJemgKyW_7SNSgMovow&libraries=places"></script>
+</head>
+<body>
+<div id="video-background"></div>
+<div id="video-overlay"></div>
+<nav>
+  <div class="nav-container">
+    <a href="index.html" class="app-title">Stargaze.app</a>
+    <div class="nav-links">
+      <a href="map.html">Map</a>
+      <a href="submit.html">Submit Location</a>
+      <a href="list.html">List</a>
+      <a href="starmap.html">Star Map</a>
+    </div>
+  </div>
+</nav>
+<div id="map"></div>
+<script>
+  function initMap() {
+    const defaultCenter = { lat: 39.8283, lng: -98.5795 }; // Center the map on the United States
+    const mapOptions = {
+      zoom: 4,
+      center: defaultCenter
+    };
+    const map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+    // Load locations from local storage
+    const locations = JSON.parse(localStorage.getItem('locations')) || [];
+    const lastLocation = JSON.parse(localStorage.getItem('lastLocation'));
+    const geocoder = new google.maps.Geocoder();
+
+    if (lastLocation) {
+      map.setCenter(lastLocation); // Center the map on the last submitted location
+      map.setZoom(10); // Adjust zoom level for better view
+
+      const marker = new google.maps.Marker({
+        position: lastLocation,
+        map: map,
+        title: 'Last Submitted Location'
+      });
+
+      const infoWindow = new google.maps.InfoWindow({
+        content: `<h1>Last Submitted Location</h1>`
+      });
+
+      marker.addListener('click', function() {
+        infoWindow.open(map, marker);
+      });
+
+      // Clear the lastLocation from localStorage
+      localStorage.removeItem('lastLocation');
+    }
+
+    // Add markers for all locations
+    locations.forEach(location => {
+      geocoder.geocode({ 'address': location.address }, function(results, status) {
+        if (status === 'OK') {
+          const marker = new google.maps.Marker({
+            position: results[0].geometry.location,
+            map: map,
+            title: location.name
+          });
+
+          const infoWindow = new google.maps.InfoWindow({
+            content: `<h1>${location.name}</h1><p>${location.description}</p>`
+          });
+
+          marker.addListener('click', function() {
+            infoWindow.open(map, marker);
+          });
+        } else {
+          console.error('Geocode was not successful for the following reason: ' + status);
+        }
+      });
+    });
+  }
+
+  // Initialize map when API is loaded
+  window.onload = initMap;
+</script>
+</body>
+</html>
